@@ -51,9 +51,11 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 ipch/
 *.opensdf
+*.opendb
 *.xcuserstate
 xcuserdata/
 Thumbs.db
+**/Generated Files/
 
 #Android
 #project.properties
