@@ -11,6 +11,12 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{e93a77e1-af1e-4400-87d3-504b62ebdbb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{77e7235c-295c-44f2-9b1f-910f8ff67f0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config">
+      <UniqueIdentifier>{cb0beada-df17-431d-a86e-33c213ab5da4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,5 +39,67 @@
     <Image Include="res\game.ico">
       <Filter>resource</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\AboutLayer.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Background.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Bullet.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Effect.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Enemy.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Explosion.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\GameController.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\GameControlMenu.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\GameLayer.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\GameOver.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\HitEffect.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\LevelManager.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Resource.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\SettingsLayer.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\Ship.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\SparkEffect.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\SysMenu.js">
+      <Filter>src</Filter>
+    </None>
+    <None Include="..\..\..\src\config\Level.js">
+      <Filter>src\config</Filter>
+    </None>
+    <None Include="..\..\..\src\config\EnemyType.js">
+      <Filter>src\config</Filter>
+    </None>
+    <None Include="..\..\..\src\config\GameConfig.js">
+      <Filter>src\config</Filter>
+    </None>
   </ItemGroup>
 </Project>

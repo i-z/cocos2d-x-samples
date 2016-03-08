@@ -64,8 +64,11 @@ var Enemy = cc.Sprite.extend({
         if (this._timeTick > 0.1) {
             this._timeTick = 0;
             if (this._hurtColorLife > 0) {
+                this.setColor(cc.color("#ff7f7f"));
                 this._hurtColorLife--;
             }
+            else
+                this.setColor(cc.color("#ffffff"));
         }
 
         if (x < 0 || x > g_sharedGameLayer.screenRect.width || y < 0 || y > g_sharedGameLayer.screenRect.height || this.HP <= 0) {
@@ -98,7 +101,7 @@ var Enemy = cc.Sprite.extend({
 	    b.y = y - this.height * 0.2;
     },
     hurt:function () {
-        this._hurtColorLife = 2;
+        this._hurtColorLife = 1;
         this.HP--;
     },
     collideRect:function (x, y) {

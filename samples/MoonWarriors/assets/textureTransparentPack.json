@@ -1,0 +1,28 @@
+{
+    "dataFormat": "cocos2d",
+    "destPath": "../res",
+    "maxTextureSize": 8192,
+    "pot2": false,
+    "scalingVariants": [
+        {
+            "name": "",
+            "scale": 1
+        }
+    ],
+    "spriteBorder": 2,
+    "spriteSheetName": "textureTransparentPack",
+    "srcList": [
+        "textureTransparentPack/bg01.png",
+        "textureTransparentPack/E0.png",
+        "textureTransparentPack/E1.png",
+        "textureTransparentPack/E2.png",
+        "textureTransparentPack/E3.png",
+        "textureTransparentPack/E4.png",
+        "textureTransparentPack/E5.png",
+        "textureTransparentPack/ship01.png",
+        "textureTransparentPack/ship02.png",
+        "textureTransparentPack/ship03.png"
+    ],
+    "textureBorder": 0,
+    "trimThreshold": 1
+}
