@@ -97,7 +97,7 @@ var LevelManager = cc.Class.extend({
         var a1=0;
         switch (addEnemy.moveType) {
             case MW.ENEMY_MOVE_TYPE.ATTACK:
-                offset = cc.p(this._gameLayer._ship.x, this._gameLayer._ship.y);
+                offset = cc.p(this._gameLayer._ship.x + 50, this._gameLayer._ship.y + 100);
                 tmpAction = cc.moveTo(1, offset);
                 break;
             case MW.ENEMY_MOVE_TYPE.VERTICAL:
@@ -109,9 +109,7 @@ var LevelManager = cc.Class.extend({
                 a0 = cc.moveBy(0.5, offset);
                 a1 = cc.moveBy(1, cc.p(-50 - 100 * Math.random(), 0));
                 var onComplete = cc.callFunc(function (pSender) {
-                    var a2 = cc.delayTime(1);
-                    var a3 = cc.moveBy(1, cc.p(100 + 100 * Math.random(), 0));
-                    pSender.runAction(cc.sequence(a2, a3, a2.clone(), a3.reverse()).repeatForever());
+                    enemyMove(pSender);
                 }.bind(addEnemy) );
                 tmpAction = cc.sequence(a0, a1, onComplete);
                 break;
@@ -126,3 +124,10 @@ var LevelManager = cc.Class.extend({
         addEnemy.runAction(tmpAction);
     }
 });
+
+function enemyMove (pSender)
+{
+    var a2 = cc.delayTime(3 * Math.random());
+    var a3 = cc.moveBy(1, cc.p(100 + 130 * Math.random(), 0));
+    pSender.runAction(cc.sequence(a2, a3, a2.clone(), a3.reverse(), cc.callFunc(function (sndr) { enemyMove(sndr); }.bind(pSender))));
+}

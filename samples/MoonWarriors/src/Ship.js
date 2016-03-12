@@ -65,7 +65,7 @@ var Ship = cc.Sprite.extend({
         var animation = new cc.Animation(animFrames, 0.1);
         var animate = cc.animate(animation);
         this.runAction(animate.repeatForever());
-        this.schedule(this.shoot, 1 / 6);
+        //this.schedule(this.shoot, MW.SHOOTING_PERIOD.SHIP);
 
         this.initBornSprite();
         this.born();

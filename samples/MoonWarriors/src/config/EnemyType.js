@@ -45,7 +45,7 @@ var EnemyType = [
         textureName:"E1.png",
         bulletType:"W2.png",
         HP:2,
-        moveType:MW.ENEMY_MOVE_TYPE.ATTACK,
+        moveType: MW.ENEMY_MOVE_TYPE.OVERLAP,
         attackMode:MW.ENEMY_MOVE_TYPE.NORMAL,
         scoreValue:40
     },

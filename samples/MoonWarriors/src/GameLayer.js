@@ -38,29 +38,31 @@ MAX_CONTAINT_HEIGHT = 40;
 var g_sharedGameLayer;
 
 var GameLayer = cc.Layer.extend({
-    _time:null,
-    _ship:null,
-    _backSky:null,
-    _backSkyHeight:0,
-    _backSkyRe:null,
-    _levelManager:null,
-    _tmpScore:0,
-    _isBackSkyReload:false,
-    _isBackTileReload:false,
-    lbScore:null,
-    screenRect:null,
-    explosionAnimation:[],
-    _beginPos:cc.p(0, 0),
-    _state:STATE_PLAYING,
-    _explosions:null,
-    _texOpaqueBatch:null,
-    _texTransparentBatch:null,
+    _time: null,
+    _ship: null,
+    _backSky: null,
+    _backSkyHeight: 0,
+    _backSkyRe: null,
+    _levelManager: null,
+    _tmpScore: 0,
+    _isBackSkyReload: false,
+    _isBackTileReload: false,
+    lbScore: null,
+    screenRect: null,
+    explosionAnimation: [],
+    _beginPos: cc.p(0, 0),
+    _state: STATE_PLAYING,
+    _explosions: null,
+    _texOpaqueBatch: null,
+    _texTransparentBatch: null,
+    _isFire: false,
+    _lastShot: 0,
 
-    ctor:function(){
+    ctor: function () {
         this._super();
         this.init();
     },
-    init:function () {
+    init: function () {
         cc.spriteFrameCache.addSpriteFrames(res.textureOpaquePack_plist);
         cc.spriteFrameCache.addSpriteFrames(res.b01_plist);
 
@@ -83,7 +85,7 @@ var GameLayer = cc.Layer.extend({
         var texOpaque = cc.textureCache.addImage(res.textureOpaquePack_png);
         this._texOpaqueBatch = new cc.SpriteBatchNode(texOpaque);
         this._sparkBatch = new cc.SpriteBatchNode(texOpaque);
-        if(cc.sys.isNative) this._sparkBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
+        if (cc.sys.isNative) this._sparkBatch.setBlendFunc(cc.SRC_ALPHA, cc.ONE);
         this.addChild(this._texOpaqueBatch);
         this.addChild(this._sparkBatch);
 
@@ -140,10 +142,10 @@ var GameLayer = cc.Layer.extend({
         if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
-                onKeyPressed:function (key, event) {
+                onKeyPressed: function (key, event) {
                     MW.KEYS[key] = true;
                 },
-                onKeyReleased:function (key, event) {
+                onKeyReleased: function (key, event) {
                     MW.KEYS[key] = false;
                 }
             }, this);
@@ -151,21 +153,35 @@ var GameLayer = cc.Layer.extend({
         if ('mouse' in cc.sys.capabilities)
             cc.eventManager.addListener({
                 event: cc.EventListener.MOUSE,
-                onMouseMove: function(event){
-                    if(event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                onMouseDown: function (event) {
+                    if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                        event.getCurrentTarget().processEvent(event);
+                },
+                onMouseMove: function (event) {
+                    if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
+                        event.getCurrentTarget().processEvent(event);
+                },
+                onMouseUp: function (event) {
+                    if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
                         event.getCurrentTarget().processEvent(event);
                 }
             }, this);
 
-        if (cc.sys.capabilities.hasOwnProperty('touches')){
+        if (cc.sys.capabilities.hasOwnProperty('touches')) {
             cc.eventManager.addListener({
                 prevTouchId: -1,
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchesMoved:function (touches, event) {
+                onTouchBegan: function (touch, event) {
+
+                },
+                onTouchesMoved: function (touches, event) {
                     var touch = touches[0];
                     if (this.prevTouchId != touch.getID())
                         this.prevTouchId = touch.getID();
                     else event.getCurrentTarget().processEvent(touches[0]);
+                },
+                onTouchEnded: function (touch, event) {
+
                 }
             }, this);
         }
@@ -193,38 +209,56 @@ var GameLayer = cc.Layer.extend({
         return true;
     },
 
-    scoreCounter:function () {
+    scoreCounter: function () {
         if (this._state == STATE_PLAYING) {
             this._time++;
             this._levelManager.loadLevelResource(this._time);
         }
     },
 
-    processEvent:function (event) {
+    processEvent: function (event) {
         if (this._state == STATE_PLAYING) {
-            var delta = event.getDelta();
-            var curPos = cc.p(this._ship.x, this._ship.y);
-            curPos = cc.pAdd(curPos, delta);
-            curPos = cc.pClamp(curPos, cc.p(0, 0), cc.p(winSize.width, winSize.height));
-            this._ship.x = curPos.x;
-	        this._ship.y = curPos.y;
-	        curPos = null;
+            switch (event._eventType) {
+                case cc.EventMouse.DOWN:
+                    this._isFire = true;
+                    break;
+                case cc.EventMouse.MOVE:
+                    var delta = event.getDelta();
+                    var curPos = cc.p(this._ship.x, this._ship.y);
+                    curPos = cc.pAdd(curPos, delta);
+                    curPos = cc.pClamp(curPos, cc.p(0, 0), cc.p(winSize.width, winSize.height));
+                    this._ship.x = curPos.x;
+                    this._ship.y = curPos.y;
+                    curPos = null;
+                    break;
+                case cc.EventMouse.UP:
+                    this._isFire = false;
+                    //this._ship.stopAllActions();
+                    break;
+            }
         }
     },
 
-    update:function (dt) {
+    update: function (dt) {
         if (this._state == STATE_PLAYING) {
             this.checkIsCollide();
             this.removeInactiveUnit(dt);
             this.checkIsReborn();
             this.updateUI();
             this._movingBackground(dt);
+            if (this._isFire) {
+                this._lastShot += dt;
+                if (this._lastShot >= MW.SHOOTING_PERIOD.SHIP) {
+                    this._ship.shoot();
+                    this._lastShot = 0;
+                }
+            }
         }
     },
-    checkIsCollide:function () {
+    checkIsCollide: function () {
         var selChild, bulletChild;
         // check collide
-        var i, locShip =this._ship;
+        var i, locShip = this._ship;
         for (i = 0; i < MW.CONTAINER.ENEMIES.length; i++) {
             selChild = MW.CONTAINER.ENEMIES[i];
             if (!selChild.active)
@@ -255,7 +289,7 @@ var GameLayer = cc.Layer.extend({
             }
         }
     },
-    removeInactiveUnit:function (dt) {
+    removeInactiveUnit: function (dt) {
         var i, selChild, children = this._texOpaqueBatch.children;
         for (i in children) {
             selChild = children[i];
@@ -277,7 +311,7 @@ var GameLayer = cc.Layer.extend({
                 selChild.update(dt);
         }
     },
-    checkIsReborn:function () {
+    checkIsReborn: function () {
         var locShip = this._ship;
         if (MW.LIFE > 0 && !locShip.active) {
             locShip.born();
@@ -291,15 +325,15 @@ var GameLayer = cc.Layer.extend({
             ));
         }
     },
-    updateUI:function () {
+    updateUI: function () {
         if (this._tmpScore < MW.SCORE) {
             this._tmpScore += 1;
         }
         this._lbLife.setString(MW.LIFE + '');
         this.lbScore.setString("Score: " + this._tmpScore);
     },
-    collide:function (a, b) {
-	    var ax = a.x, ay = a.y, bx = b.x, by = b.y;
+    collide: function (a, b) {
+        var ax = a.x, ay = a.y, bx = b.x, by = b.y;
         if (Math.abs(ax - bx) > MAX_CONTAINT_WIDTH || Math.abs(ay - by) > MAX_CONTAINT_HEIGHT)
             return false;
 
@@ -307,34 +341,34 @@ var GameLayer = cc.Layer.extend({
         var bRect = b.collideRect(bx, by);
         return cc.rectIntersectsRect(aRect, bRect);
     },
-    initBackground:function () {
+    initBackground: function () {
         this._backSky = BackSky.getOrCreate();
         this._backSkyHeight = this._backSky.height;
 
         this.moveTileMap();
         this.schedule(this.moveTileMap, 5);
     },
-    moveTileMap:function () {
+    moveTileMap: function () {
         var backTileMap = BackTileMap.getOrCreate();
         var ran = Math.random();
         backTileMap.x = ran * 320;
-	    backTileMap.y = winSize.height;
-        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height-backTileMap.height));
-        var fun = cc.callFunc(function(){
+        backTileMap.y = winSize.height;
+        var move = cc.moveBy(ran * 2 + 10, cc.p(0, -winSize.height - backTileMap.height));
+        var fun = cc.callFunc(function () {
             backTileMap.destroy();
-        },this);
-        backTileMap.runAction(cc.sequence(move,fun));
+        }, this);
+        backTileMap.runAction(cc.sequence(move, fun));
     },
 
-    _movingBackground:function(dt){
+    _movingBackground: function (dt) {
         var movingDist = 16 * dt;       // background's moving rate is 16 pixel per second
 
         var locSkyHeight = this._backSkyHeight, locBackSky = this._backSky;
         var currPosY = locBackSky.y - movingDist;
         var locBackSkyRe = this._backSkyRe;
 
-        if(locSkyHeight + currPosY <= winSize.height){
-             if(locBackSkyRe != null)
+        if (locSkyHeight + currPosY <= winSize.height) {
+            if (locBackSkyRe != null)
                 throw "The memory is leaking at moving background";
             locBackSkyRe = this._backSky;
             this._backSkyRe = this._backSky;
@@ -346,10 +380,10 @@ var GameLayer = cc.Layer.extend({
         } else
             locBackSky.y = currPosY;
 
-        if(locBackSkyRe){
+        if (locBackSkyRe) {
             //locBackSkyRe
             currPosY = locBackSkyRe.y - movingDist;
-            if(currPosY + locSkyHeight < 0){
+            if (currPosY + locSkyHeight < 0) {
                 locBackSkyRe.destroy();
                 this._backSkyRe = null;
             } else
@@ -357,12 +391,12 @@ var GameLayer = cc.Layer.extend({
         }
     },
 
-    onGameOver:function () {
+    onGameOver: function () {
         cc.audioEngine.stopMusic();
         cc.audioEngine.stopAllEffects();
         var scene = new cc.Scene();
         scene.addChild(new GameOver());
-	    cc.director.runScene(new cc.TransitionFade(1.2, scene));
+        cc.director.runScene(new cc.TransitionFade(1.2, scene));
     }
 });
 

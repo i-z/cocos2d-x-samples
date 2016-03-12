@@ -118,8 +118,13 @@ MW.CONTAINER = {
 //bullet speed
 MW.BULLET_SPEED = {
     ENEMY:-200,
-    SHIP:900
+    SHIP:400
 };
+
+MW.SHOOTING_PERIOD = {
+    ENEMY: 1 / 2,
+    SHIP: 1 / 2
+}
 // the counter of active enemies
 MW.ACTIVE_ENEMIES = 0;
 
