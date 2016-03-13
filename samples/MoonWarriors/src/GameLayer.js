@@ -171,8 +171,8 @@ var GameLayer = cc.Layer.extend({
             cc.eventManager.addListener({
                 prevTouchId: -1,
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchesBegan: function (touch, event) {
-                    this.prevTouchId = touch.getID();
+                onTouchesBegan: function (touches, event) {
+                    this.prevTouchId = touches[0].getID();
                     event.getCurrentTarget().touchBegan();
                 },
                 onTouchesMoved: function (touches, event) {
@@ -186,25 +186,6 @@ var GameLayer = cc.Layer.extend({
                     event.getCurrentTarget().touchEnded();
                 }
             }, this);
-            /*
-            cc.eventManager.addListener({
-                prevTouchId: -1,
-                event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                onTouchBegan: function (touch, event) {
-                    this.prevTouchId = touch.getID();
-                    event.getCurrentTarget().touchBegan();
-                },
-                onTouchMoved: function (touches, event) {
-                    var touch = touches[0];
-                    if (this.prevTouchId != touch.getID())
-                        this.prevTouchId = touch.getID();
-                    else event.getCurrentTarget().touchMoved(touches[0].getDelta());
-                },
-                onTouchEnded: function (touch, event) {
-                    this.prevTouchId = -1;
-                    event.getCurrentTarget().touchEnded();
-                }
-            }, this);*/
         }
 
         // schedule
