@@ -155,15 +155,15 @@ var GameLayer = cc.Layer.extend({
                 event: cc.EventListener.MOUSE,
                 onMouseDown: function (event) {
                     if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
-                        event.getCurrentTarget().processEvent(event);
+                        event.getCurrentTarget().touchBegan();
                 },
                 onMouseMove: function (event) {
                     if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
-                        event.getCurrentTarget().processEvent(event);
+                        event.getCurrentTarget().touchMoved(event.getDelta());
                 },
                 onMouseUp: function (event) {
                     if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
-                        event.getCurrentTarget().processEvent(event);
+                        event.getCurrentTarget().touchEnded();
                 }
             }, this);
 
@@ -171,19 +171,40 @@ var GameLayer = cc.Layer.extend({
             cc.eventManager.addListener({
                 prevTouchId: -1,
                 event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-                onTouchBegan: function (touch, event) {
-
+                onTouchesBegan: function (touch, event) {
+                    this.prevTouchId = touch.getID();
+                    event.getCurrentTarget().touchBegan();
                 },
                 onTouchesMoved: function (touches, event) {
                     var touch = touches[0];
                     if (this.prevTouchId != touch.getID())
                         this.prevTouchId = touch.getID();
-                    else event.getCurrentTarget().processEvent(touches[0]);
+                    else event.getCurrentTarget().touchMoved(touches[0].getDelta());
                 },
-                onTouchEnded: function (touch, event) {
-
+                onTouchesEnded: function (touch, event) {
+                    this.prevTouchId = -1;
+                    event.getCurrentTarget().touchEnded();
                 }
             }, this);
+            /*
+            cc.eventManager.addListener({
+                prevTouchId: -1,
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
+                onTouchBegan: function (touch, event) {
+                    this.prevTouchId = touch.getID();
+                    event.getCurrentTarget().touchBegan();
+                },
+                onTouchMoved: function (touches, event) {
+                    var touch = touches[0];
+                    if (this.prevTouchId != touch.getID())
+                        this.prevTouchId = touch.getID();
+                    else event.getCurrentTarget().touchMoved(touches[0].getDelta());
+                },
+                onTouchEnded: function (touch, event) {
+                    this.prevTouchId = -1;
+                    event.getCurrentTarget().touchEnded();
+                }
+            }, this);*/
         }
 
         // schedule
@@ -215,27 +236,27 @@ var GameLayer = cc.Layer.extend({
             this._levelManager.loadLevelResource(this._time);
         }
     },
-
-    processEvent: function (event) {
+    
+    touchMoved: function(delta){
         if (this._state == STATE_PLAYING) {
-            switch (event._eventType) {
-                case cc.EventMouse.DOWN:
-                    this._isFire = true;
-                    break;
-                case cc.EventMouse.MOVE:
-                    var delta = event.getDelta();
-                    var curPos = cc.p(this._ship.x, this._ship.y);
-                    curPos = cc.pAdd(curPos, delta);
-                    curPos = cc.pClamp(curPos, cc.p(0, 0), cc.p(winSize.width, winSize.height));
-                    this._ship.x = curPos.x;
-                    this._ship.y = curPos.y;
-                    curPos = null;
-                    break;
-                case cc.EventMouse.UP:
-                    this._isFire = false;
-                    //this._ship.stopAllActions();
-                    break;
-            }
+            var curPos = cc.p(this._ship.x, this._ship.y);
+            curPos = cc.pAdd(curPos, delta);
+            curPos = cc.pClamp(curPos, cc.p(0, 0), cc.p(winSize.width, winSize.height));
+            this._ship.x = curPos.x;
+            this._ship.y = curPos.y;
+            curPos = null;
+        }
+    },
+
+    touchBegan: function(){
+        if (this._state == STATE_PLAYING) {
+            this._isFire = true;
+        }
+    },
+
+    touchEnded: function(){
+        if (this._state == STATE_PLAYING) {
+            this._isFire = false;
         }
     },
 
