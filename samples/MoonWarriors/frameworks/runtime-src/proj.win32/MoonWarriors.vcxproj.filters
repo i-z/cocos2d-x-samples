@@ -17,6 +17,15 @@
     <Filter Include="src\config">
       <UniqueIdentifier>{cb0beada-df17-431d-a86e-33c213ab5da4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\layers">
+      <UniqueIdentifier>{4da68b4b-e1a1-4a3c-825a-593afcee3d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\objects">
+      <UniqueIdentifier>{cc77edc8-8597-45ca-9c2b-c7a443bf638b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\effects">
+      <UniqueIdentifier>{b18b424e-9a0a-4c9b-bb7e-afefbf3273fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,55 +50,13 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\src\AboutLayer.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\Background.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\Bullet.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\Effect.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\Enemy.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\Explosion.js">
-      <Filter>src</Filter>
-    </None>
     <None Include="..\..\..\src\GameController.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\GameControlMenu.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\GameLayer.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\GameOver.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\HitEffect.js">
       <Filter>src</Filter>
     </None>
     <None Include="..\..\..\src\LevelManager.js">
       <Filter>src</Filter>
     </None>
     <None Include="..\..\..\src\Resource.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\SettingsLayer.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\Ship.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\SparkEffect.js">
-      <Filter>src</Filter>
-    </None>
-    <None Include="..\..\..\src\SysMenu.js">
       <Filter>src</Filter>
     </None>
     <None Include="..\..\..\src\config\Level.js">
@@ -100,6 +67,50 @@
     </None>
     <None Include="..\..\..\src\config\GameConfig.js">
       <Filter>src\config</Filter>
+    </None>
+    <None Include="..\..\..\project.json" />
+    <None Include="..\..\..\src\layers\AboutLayer.js">
+      <Filter>src\layers</Filter>
+    </None>
+    <None Include="..\..\..\src\layers\GameLayer.js">
+      <Filter>src\layers</Filter>
+    </None>
+    <None Include="..\..\..\src\layers\SettingsLayer.js">
+      <Filter>src\layers</Filter>
+    </None>
+    <None Include="..\..\..\src\objects\Background.js">
+      <Filter>src\objects</Filter>
+    </None>
+    <None Include="..\..\..\src\objects\Bullet.js">
+      <Filter>src\objects</Filter>
+    </None>
+    <None Include="..\..\..\src\objects\Enemy.js">
+      <Filter>src\objects</Filter>
+    </None>
+    <None Include="..\..\..\src\objects\Explosion.js">
+      <Filter>src\objects</Filter>
+    </None>
+    <None Include="..\..\..\src\objects\HitEffect.js">
+      <Filter>src\objects</Filter>
+    </None>
+    <None Include="..\..\..\src\objects\Ship.js">
+      <Filter>src\objects</Filter>
+    </None>
+    <None Include="..\..\..\src\effects\Effect.js">
+      <Filter>src\effects</Filter>
+    </None>
+    <None Include="..\..\..\src\effects\SparkEffect.js">
+      <Filter>src\effects</Filter>
+    </None>
+    <None Include="..\..\..\src\layers\GameOverLayer.js">
+      <Filter>src\layers</Filter>
+    </None>
+    <None Include="..\..\..\src\layers\SysMenuLayer.js">
+      <Filter>src\layers</Filter>
+    </None>
+    <None Include="..\..\..\main.js" />
+    <None Include="..\..\..\src\objects\GameControlMenu.js">
+      <Filter>src\objects</Filter>
     </None>
   </ItemGroup>
 </Project>

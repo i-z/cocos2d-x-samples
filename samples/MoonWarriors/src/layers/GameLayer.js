@@ -397,7 +397,7 @@ var GameLayer = cc.Layer.extend({
         cc.audioEngine.stopMusic();
         cc.audioEngine.stopAllEffects();
         var scene = new cc.Scene();
-        scene.addChild(new GameOver());
+        scene.addChild(new GameOverLayer());
         cc.director.runScene(new cc.TransitionFade(1.2, scene));
     }
 });
@@ -405,7 +405,8 @@ var GameLayer = cc.Layer.extend({
 GameLayer.scene = function () {
     var scene = new cc.Scene();
     var layer = new GameLayer();
-    scene.addChild(layer, 1);
+    scene.addChild(layer);
+    scene.addChild(new GameControlMenu());
     return scene;
 };
 

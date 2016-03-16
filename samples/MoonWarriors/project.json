@@ -10,26 +10,26 @@
 
     "modules" : ["cocos2d"],
 
-    "jsList" : [
-        "src/Resource.js",
-        "src/config/GameConfig.js",
-        "src/config/EnemyType.js",
-        "src/config/Level.js",
-        "src/Effect.js",
-        "src/Bullet.js",
-        "src/Enemy.js",
-        "src/Explosion.js",
-        "src/Ship.js",
-        "src/LevelManager.js",
-        "src/GameController.js",
-        "src/GameControlMenu.js",
-        "src/GameLayer.js",
-        "src/GameOver.js",
-        "src/AboutLayer.js",
-        "src/SettingsLayer.js",
-        "src/SysMenu.js",
-        "src/HitEffect.js",
-        "src/SparkEffect.js",
-        "src/Background.js"
-    ]
+  "jsList": [
+    "src/Resource.js",
+    "src/config/GameConfig.js",
+    "src/config/EnemyType.js",
+    "src/config/Level.js",
+    "src/effects/Effect.js",
+    "src/objects/Bullet.js",
+    "src/objects/Enemy.js",
+    "src/objects/Explosion.js",
+    "src/objects/Ship.js",
+    "src/LevelManager.js",
+    "src/GameController.js",
+    "src/objects/GameControlMenu.js",
+    "src/layers/GameLayer.js",
+    "src/layers/GameOverLayer.js",
+    "src/layers/AboutLayer.js",
+    "src/layers/SettingsLayer.js",
+    "src/layers/SysMenuLayer.js",
+    "src/objects/HitEffect.js",
+    "src/effects/SparkEffect.js",
+    "src/objects/Background.js"
+  ]
 }

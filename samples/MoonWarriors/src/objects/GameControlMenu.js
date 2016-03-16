@@ -57,7 +57,7 @@ var GameControlMenu = cc.Layer.extend({
         cc.audioEngine.stopMusic();
         cc.audioEngine.stopAllEffects();
         var scene = new cc.Scene();
-        scene.addChild(new SysMenu());
+        scene.addChild(new SysMenuLayer());
 	    cc.director.runScene(new cc.TransitionFade(1.2,scene));
     }
 });

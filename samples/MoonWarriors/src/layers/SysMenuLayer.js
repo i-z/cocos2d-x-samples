@@ -30,7 +30,7 @@
  Quality Assurance: Sean Lin (林顺)
  ****************************************************************************/
 
-var SysMenu = cc.Layer.extend({
+var SysMenuLayer = cc.Layer.extend({
     _ship:null,
 
     ctor:function () {
@@ -126,10 +126,7 @@ var SysMenu = cc.Layer.extend({
         cc.LoaderScene.preload(g_maingame, function () {
             cc.audioEngine.stopMusic();
             cc.audioEngine.stopAllEffects();
-            var scene = new cc.Scene();
-            scene.addChild(new GameLayer());
-            scene.addChild(new GameControlMenu());
-	        cc.director.runScene(new cc.TransitionFade(1.2, scene));
+            cc.director.runScene(new cc.TransitionFade(1.2, GameLayer.scene()));
         }, this);
     },
     onSettings:function (pSender) {
@@ -161,9 +158,9 @@ var SysMenu = cc.Layer.extend({
     }
 });
 
-SysMenu.scene = function () {
+SysMenuLayer.scene = function () {
     var scene = new cc.Scene();
-    var layer = new SysMenu();
+    var layer = new SysMenuLayer();
     scene.addChild(layer);
     return scene;
 };

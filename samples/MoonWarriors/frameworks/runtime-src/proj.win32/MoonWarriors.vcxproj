@@ -195,26 +195,28 @@ copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\src\AboutLayer.js" />
-    <None Include="..\..\..\src\Background.js" />
-    <None Include="..\..\..\src\Bullet.js" />
+    <None Include="..\..\..\main.js" />
+    <None Include="..\..\..\project.json" />
     <None Include="..\..\..\src\config\EnemyType.js" />
     <None Include="..\..\..\src\config\GameConfig.js" />
     <None Include="..\..\..\src\config\Level.js" />
-    <None Include="..\..\..\src\Effect.js" />
-    <None Include="..\..\..\src\Enemy.js" />
-    <None Include="..\..\..\src\Explosion.js" />
+    <None Include="..\..\..\src\effects\Effect.js" />
+    <None Include="..\..\..\src\effects\SparkEffect.js" />
     <None Include="..\..\..\src\GameController.js" />
-    <None Include="..\..\..\src\GameControlMenu.js" />
-    <None Include="..\..\..\src\GameLayer.js" />
-    <None Include="..\..\..\src\GameOver.js" />
-    <None Include="..\..\..\src\HitEffect.js" />
+    <None Include="..\..\..\src\layers\GameOverLayer.js" />
+    <None Include="..\..\..\src\layers\AboutLayer.js" />
+    <None Include="..\..\..\src\layers\GameLayer.js" />
+    <None Include="..\..\..\src\layers\SettingsLayer.js" />
+    <None Include="..\..\..\src\layers\SysMenuLayer.js" />
     <None Include="..\..\..\src\LevelManager.js" />
+    <None Include="..\..\..\src\objects\Background.js" />
+    <None Include="..\..\..\src\objects\Bullet.js" />
+    <None Include="..\..\..\src\objects\Enemy.js" />
+    <None Include="..\..\..\src\objects\Explosion.js" />
+    <None Include="..\..\..\src\objects\GameControlMenu.js" />
+    <None Include="..\..\..\src\objects\HitEffect.js" />
+    <None Include="..\..\..\src\objects\Ship.js" />
     <None Include="..\..\..\src\Resource.js" />
-    <None Include="..\..\..\src\SettingsLayer.js" />
-    <None Include="..\..\..\src\Ship.js" />
-    <None Include="..\..\..\src\SparkEffect.js" />
-    <None Include="..\..\..\src\SysMenu.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
